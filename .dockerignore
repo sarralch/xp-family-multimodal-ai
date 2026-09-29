@@ -1,0 +1,16 @@
+.git
+.venv
+venv
+.env
+*.env
+!configs/*.env
+.cache
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.ruff_cache
+data
+!data/sample
+eval/runs
+**/db.sqlite3
+assets

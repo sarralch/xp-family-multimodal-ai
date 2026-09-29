@@ -1,0 +1,31 @@
+# One command: docker compose up --build
+#   API + Swagger UI  → http://localhost:8000/docs
+#   Web UI (Django)   → http://localhost:8001
+#
+# Your datasets are mounted read-only from ./data (see data/README.md). To try it
+# without them, set DATA_DIR=/app/data/sample in .env to use the synthetic sample.
+x-app: &app
+  image: xp-family:local
+  env_file: .env
+  volumes:
+    - ./data:/app/data:ro
+    - model-cache:/cache
+
+services:
+  api:
+    <<: *app
+    build: .
+    ports: ["8000:8000"]
+
+  web:
+    <<: *app
+    working_dir: /app/web
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             python manage.py runserver 0.0.0.0:8001"
+    ports: ["8001:8001"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/assistants/dashboard_assistant/')"]
+
+volumes:
+  model-cache:
