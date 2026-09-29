@@ -9,7 +9,7 @@ aria-live region: the v1 letter-by-letter "typing" effect was announced erratica
   .xp-results th, .xp-results td { border: 1px solid #ccc; padding: .4rem .6rem; text-align: left; }
   .xp-status { font-weight: 700; }
   .xp-status-banned, .xp-status-caution { color: #b00020; }
-  .xp-status-safe { color: #1b6e20; }
+  .xp-status-not_flagged { color: #1b4f8a; }
   .xp-status-unknown { color: #7a5200; }
   .xp-error { border: 2px solid #b00020; padding: .75rem; border-radius: 6px; }
   .xp-disclaimer { font-size: .9rem; opacity: .85; }
@@ -28,7 +28,7 @@ aria-live region: the v1 letter-by-letter "typing" effect was announced erratica
       <h2>Analyse des ingrédients</h2>
       <table>
         <caption class="xp-disclaimer">
-          interdit / déconseillé = à éviter · inconnu = à vérifier avec un dermatologue
+          interdit / déconseillé = à éviter · sans signalement = aucune alerte XP dans nos données (ce n’est pas une garantie) · inconnu = à vérifier avec un dermatologue
         </caption>
         <thead><tr><th scope="col">Ingrédient</th><th scope="col">Statut</th><th scope="col">Détail</th></tr></thead>
         <tbody>
@@ -37,7 +37,7 @@ aria-live region: the v1 letter-by-letter "typing" effect was announced erratica
               <td>{{ v.ingredient }}</td>
               <td class="xp-status xp-status-{{ v.status }}">
                 {% if v.status == "banned" %}Interdit{% elif v.status == "caution" %}Déconseillé
-                {% elif v.status == "safe" %}Compatible{% else %}Inconnu{% endif %}
+                {% elif v.status == "not_flagged" %}Sans signalement{% else %}Inconnu{% endif %}
               </td>
               <td>{{ v.matched|default:"" }}{% if v.effects %} — {{ v.effects|join:", " }}{% endif %}</td>
             </tr>

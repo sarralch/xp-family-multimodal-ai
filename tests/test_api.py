@@ -29,7 +29,7 @@ def test_ask_returns_answer_with_sources(client):
 
 def test_safety_check_is_deterministic(client):
     body = client.post("/v1/safety-check", json={"ingredients": "Glycerin, Oxybenzone, Foo"}).json()
-    assert [v["status"] for v in body["verdicts"]] == ["safe", "banned", "unknown"]
+    assert [v["status"] for v in body["verdicts"]] == ["not_flagged", "banned", "unknown"]
     assert body["summary"]["banned"] == 1
 
 

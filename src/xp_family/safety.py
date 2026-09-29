@@ -4,6 +4,11 @@ v1 treated any ingredient absent from the banned list as safe. For a tool used b
 families of children with XP that is the wrong default, so every ingredient now gets
 one of four explicit statuses and "unknown" is surfaced, never silently passed.
 Matching is accent- and case-insensitive and covers names, synonyms and CAS numbers.
+
+The engine never declares an ingredient *safe*. Being in the ingredient-information
+file without an XP warning only means "no warning in our data" (NOT_FLAGGED): in the
+project dataset every entry carries safe_for_xp=true, including photosensitising
+retinol, so that flag cannot support a safety claim.
 """
 
 from __future__ import annotations
@@ -25,8 +30,8 @@ _LABEL = re.compile(r"^\s*(ingr[eé]dients?|ingredients?|inci)\s*[:：]\s*", re.
 
 class Status(StrEnum):
     BANNED = "banned"  # on the regulatory / XP banned list
-    CAUTION = "caution"  # known ingredient, flagged as not suitable for XP
-    SAFE = "safe"  # known ingredient, flagged as suitable for XP
+    CAUTION = "caution"  # known ingredient, explicitly flagged as not suitable for XP
+    NOT_FLAGGED = "not_flagged"  # known ingredient, no XP warning in our data (not "safe")
     UNKNOWN = "unknown"  # not in any list — needs professional review
 
 
@@ -73,7 +78,10 @@ class SafetyChecker:
 
         self._info: dict[str, tuple[str, bool]] = {}
         for key, entry in (ingredient_info or {}).items():
-            self._info[_key(key)] = (key, bool(entry.get("safe_for_xp")))
+            if _key(key) in ("", "nan", "none", "null"):  # export artefacts
+                continue
+            # Only an explicit `false` is a warning; a missing flag is not.
+            self._info[_key(key)] = (key, entry.get("safe_for_xp") is not False)
 
     @classmethod
     def from_files(cls, banned_path: Path, info_path: Path | None = None) -> SafetyChecker:
@@ -96,8 +104,9 @@ class SafetyChecker:
                 return Verdict(ingredient, Status.BANNED, label, effects)
         for cand in candidates:
             if cand in self._info:
-                label, safe = self._info[cand]
-                return Verdict(ingredient, Status.SAFE if safe else Status.CAUTION, label)
+                label, unflagged = self._info[cand]
+                status = Status.NOT_FLAGGED if unflagged else Status.CAUTION
+                return Verdict(ingredient, status, label)
         return Verdict(ingredient, Status.UNKNOWN)
 
     def check(self, ingredients: list[str]) -> list[Verdict]:
