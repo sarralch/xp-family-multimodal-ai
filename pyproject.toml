@@ -4,7 +4,6 @@ version = "2.0.0"
 description = "Multimodal RAG platform supporting Xeroderma Pigmentosum patients: cosmetic safety scanning, ingredient Q&A, XP-safe recipes and UV-aware appointment scheduling."
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
-license = { text = "MIT" }
 authors = [
     { name = "Sarra Lachheb" },
     { name = "Mohamed Iyed Lagha" },
