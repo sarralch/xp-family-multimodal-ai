@@ -1,14 +1,20 @@
 # Python
 __pycache__/
 *.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
 # Virtual environments
 venv/
 .venv/
 
-# Secrets
+# Secrets — only .env.example is committed
 .env
 *.env
+!.env.example
 
 # Databases
 db.sqlite3
@@ -16,26 +22,37 @@ db.sqlite3
 *.sqlite
 *.sqlite3
 
-# Data / datasets
+# Data: real datasets stay local (see data/README.md). Only the synthetic sample ships.
+data/*
+!data/README.md
+!data/sample/
 *.json
-data/
+!data/sample/*.json
 
-# Vector indexes
+# Evaluation: per-question outputs on real data stay local; aggregates go in the README
+eval/runs/
+
+# Indexes, caches and model files (pickles can execute code when loaded)
+.cache/
 faiss_index/
 vector_index/
+*_vector_index/
 *.faiss
 *.pkl
-
-# AI models
+*.npy
 *.pth
 *.pt
 *.ckpt
+*.h5
+*.keras
 
-# IDE
+# Uploads / media
+media/
+uploads/
+
+# IDE / OS
 .vscode/
 .idea/
-
-# OS
 Thumbs.db
 Desktop.ini
 .DS_Store
