@@ -1,0 +1,30 @@
+{
+  "hydroquinone": {
+    "name": "Hydroquinone",
+    "cas": "123-31-9",
+    "synonyms": ["1,4-benzenediol"],
+    "effects": ["Dépigmentant", "Irritant"],
+    "safe_for_xp": false
+  },
+  "benzophenones": {
+    "name": "Benzophenones",
+    "cas": "",
+    "synonyms": ["benzophenone-1", "benzophenone-3", "oxybenzone"],
+    "effects": ["Perturbateur endocrinien", "Allergène"],
+    "safe_for_xp": false
+  },
+  "1,2-epoxybutane": {
+    "name": "1,2-Époxybutane",
+    "cas": "106-88-7",
+    "synonyms": [],
+    "effects": [],
+    "safe_for_xp": false
+  },
+  "bergamot oil": {
+    "name": "Huile de bergamote (non défurocoumarinée)",
+    "cas": "8007-75-8",
+    "synonyms": ["citrus bergamia oil"],
+    "effects": ["Photosensibilisant"],
+    "safe_for_xp": false
+  }
+}

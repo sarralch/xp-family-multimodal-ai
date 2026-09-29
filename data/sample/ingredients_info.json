@@ -1,0 +1,30 @@
+{
+  "aloe vera": {
+    "description": "Aloe vera (aloe barbadensis leaf juice) apporte hydratation et antioxydants.",
+    "function": "Apaise les peaux irritées et réduit les rougeurs.",
+    "good_for": "Peaux sèches, barrière cutanée altérée",
+    "avoid": "Allergie connue",
+    "safe_for_xp": true
+  },
+  "glycerin": {
+    "description": "Humectant qui attire l'eau dans les couches supérieures de la peau.",
+    "function": "Hydratation, renforcement de la barrière cutanée.",
+    "good_for": "Tous types de peau",
+    "avoid": "",
+    "safe_for_xp": true
+  },
+  "retinol": {
+    "description": "Dérivé de la vitamine A qui accélère le renouvellement cellulaire.",
+    "function": "Anti-âge ; augmente la photosensibilité.",
+    "good_for": "Rides, texture",
+    "avoid": "Exposition solaire, grossesse",
+    "safe_for_xp": false
+  },
+  "zinc oxide": {
+    "description": "Filtre minéral à large spectre UVA/UVB.",
+    "function": "Protection solaire physique, apaisant.",
+    "good_for": "Peaux sensibles, protection UV",
+    "avoid": "",
+    "safe_for_xp": true
+  }
+}

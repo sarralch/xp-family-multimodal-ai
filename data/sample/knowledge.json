@@ -1,0 +1,23 @@
+[
+  {
+    "Substance_chimique": "Hydroquinone",
+    "No_CAS": "123-31-9",
+    "Synonymes_et_composés_apparentés": "1,4-benzenediol",
+    "statut_reglementaire": "Interdite dans les cosmétiques ; usage médical encadré."
+  },
+  {
+    "substance_chimique": "Zinc oxide",
+    "numero_cas": "1314-13-2",
+    "conditions_utilisation": "Filtre UV autorisé jusqu'à 25 % ; ne pas utiliser sous forme de spray.",
+    "concentration_maximale": "25 %"
+  },
+  {
+    "titre": "Photoprotection chez les patients atteints de Xeroderma Pigmentosum",
+    "recommandations": [
+      "Éviter toute exposition aux UV",
+      "Préférer les filtres minéraux",
+      "Éviter les ingrédients photosensibilisants comme les huiles d'agrumes"
+    ],
+    "source": "Échantillon synthétique pour les tests"
+  }
+]
