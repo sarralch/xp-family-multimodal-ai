@@ -175,37 +175,11 @@
   </button>
 </form>
 
+{% include "assistants/_results.html" %}
 {% if result %}
-  <h2><i class="fas fa-brain"></i> Résultat</h2>
-  <pre id="aiResponse"></pre>
-  <button class="btn mic-btn" onclick="speakResponse()">
-    <i class="fas fa-volume-up"></i> Écouter la réponse
+  <button type="button" class="btn mic-btn" onclick="speakResponse()">
+    <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Écouter la réponse
   </button>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const fullText = `{{ result.response|escapejs }}`;
-      const responseBox = document.getElementById("aiResponse");
-      const container = document.body;
-      let i = 0;
-
-      container.classList.remove("ready");
-
-      setTimeout(() => {
-        container.classList.add("ready");
-        responseBox.textContent = "";
-
-        const typing = setInterval(() => {
-          if (i < fullText.length) {
-            responseBox.textContent += fullText.charAt(i);
-            i++;
-          } else {
-            clearInterval(typing);
-          }
-        }, 25);
-      }, 1500);
-    });
-  </script>
 {% endif %}
 
 <script>

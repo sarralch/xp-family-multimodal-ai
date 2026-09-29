@@ -129,30 +129,11 @@
   </button>
 </form>
 
+{% include "assistants/_results.html" %}
 {% if result %}
-  <h2><i class="fa-solid fa-brain"></i> Réponse IA</h2>
-  <pre id="aiResponse">🤖 Le bot est en train d’écrire...</pre>
-  <button class="btn mic-btn" onclick="speakResponse()">
-    <i class="fa-solid fa-volume-high"></i> Écouter la réponse
+  <button type="button" class="btn mic-btn" onclick="speakResponse()">
+    <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Écouter la réponse
   </button>
-
-  <script>
-    const fullResponse = `{{ result.response|escapejs }}`;
-    const typingDiv = document.getElementById("aiResponse");
-
-    setTimeout(() => {
-      typingDiv.textContent = "";
-      let i = 0;
-      const typingInterval = setInterval(() => {
-        if (i < fullResponse.length) {
-          typingDiv.textContent += fullResponse.charAt(i);
-          i++;
-        } else {
-          clearInterval(typingInterval);
-        }
-      }, 30);
-    }, 1500); // délai avant démarrage de l'affichage
-  </script>
 {% endif %}
 
 <script>

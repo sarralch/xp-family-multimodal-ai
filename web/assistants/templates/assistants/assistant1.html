@@ -149,45 +149,6 @@
         <button type="submit"><i class="fas fa-paper-plane"></i> Envoyer l'image</button>
     </form>
 
-    {% if result %}
-        <div class="chat-box">
-            <h2>💬 Réponse générée</h2>
-            <div class="chat-bubble" id="typing-response">
-                🤖 Le bot est en train d’écrire...
-            </div>
-
-            <h2>📈 Évaluation de la Génération</h2>
-            <div class="score">
-                <p><strong>BERTScore Precision :</strong> {{ result.bert_precision }}</p>
-                <p><strong>BERTScore Recall :</strong> {{ result.bert_recall }}</p>
-                <p><strong>BERTScore F1 :</strong> {{ result.bert_f1 }}</p>
-            </div>
-
-            <h2>📚 Évaluation du Rappel Documentaire</h2>
-            <div class="retrieval-score">
-                <p><strong>Recall@k :</strong> {{ result.recall_at_k }}</p>
-                <p><strong>Hit@k :</strong> {{ result.hit_at_k }}</p>
-                <p><strong>MRR :</strong> {{ result.mrr }}</p>
-            </div>
-        </div>
-
-        <script>
-            const fullResponse = `{{ result.response|escapejs }}`;
-            const typingDiv = document.getElementById("typing-response");
-
-            setTimeout(() => {
-                typingDiv.textContent = ""; // efface le message de réflexion
-                let i = 0;
-                const interval = setInterval(() => {
-                    if (i < fullResponse.length) {
-                        typingDiv.textContent += fullResponse.charAt(i);
-                        i++;
-                    } else {
-                        clearInterval(interval);
-                    }
-                }, 30);
-            }, 1500);
-        </script>
-    {% endif %}
+{% include "assistants/_results.html" %}
 </div>
 {% endblock %}

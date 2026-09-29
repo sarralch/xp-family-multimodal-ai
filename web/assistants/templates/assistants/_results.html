@@ -1,0 +1,60 @@
+{% comment %}
+Shared result block for the three assistants. Content is rendered at once inside an
+aria-live region: the v1 letter-by-letter "typing" effect was announced erratically
+(or not at all) by screen readers.
+{% endcomment %}
+<style>
+  .xp-results { margin-top: 1.5rem; line-height: 1.6; }
+  .xp-results table { border-collapse: collapse; width: 100%; margin: .75rem 0; }
+  .xp-results th, .xp-results td { border: 1px solid #ccc; padding: .4rem .6rem; text-align: left; }
+  .xp-status { font-weight: 700; }
+  .xp-status-banned, .xp-status-caution { color: #b00020; }
+  .xp-status-safe { color: #1b6e20; }
+  .xp-status-unknown { color: #7a5200; }
+  .xp-error { border: 2px solid #b00020; padding: .75rem; border-radius: 6px; }
+  .xp-disclaimer { font-size: .9rem; opacity: .85; }
+</style>
+
+<section class="xp-results" aria-live="polite">
+  {% if error %}
+    <p class="xp-error" role="alert">⚠️ {{ error }}</p>
+  {% endif %}
+
+  {% if result %}
+    <h2>Réponse</h2>
+    <pre id="aiResponse" style="white-space: pre-wrap">{{ result.response }}</pre>
+
+    {% if result.verdicts %}
+      <h2>Analyse des ingrédients</h2>
+      <table>
+        <caption class="xp-disclaimer">
+          interdit / déconseillé = à éviter · inconnu = à vérifier avec un dermatologue
+        </caption>
+        <thead><tr><th scope="col">Ingrédient</th><th scope="col">Statut</th><th scope="col">Détail</th></tr></thead>
+        <tbody>
+          {% for v in result.verdicts %}
+            <tr>
+              <td>{{ v.ingredient }}</td>
+              <td class="xp-status xp-status-{{ v.status }}">
+                {% if v.status == "banned" %}Interdit{% elif v.status == "caution" %}Déconseillé
+                {% elif v.status == "safe" %}Compatible{% else %}Inconnu{% endif %}
+              </td>
+              <td>{{ v.matched|default:"" }}{% if v.effects %} — {{ v.effects|join:", " }}{% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+
+    {% if result.sources %}
+      <h2>Sources</h2>
+      <ol>
+        {% for hit in result.sources %}
+          <li>{{ hit.document.title }}</li>
+        {% endfor %}
+      </ol>
+    {% endif %}
+
+    <p class="xp-disclaimer">Ces informations ne remplacent pas l'avis d'un dermatologue.</p>
+  {% endif %}
+</section>
