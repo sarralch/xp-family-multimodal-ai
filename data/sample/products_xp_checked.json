@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Crème apaisante aloe & zinc",
+    "type": "Moisturiser",
+    "ingredients": ["aqua", "aloe vera", "glycerin", "zinc oxide"],
+    "safe_for_xp": true,
+    "contains": []
+  },
+  {
+    "name": "Sérum éclat bergamote",
+    "type": "Serum",
+    "ingredients": ["aqua", "citrus bergamia oil", "retinol"],
+    "safe_for_xp": false,
+    "contains": ["citrus bergamia oil", "retinol"]
+  },
+  {
+    "name": "Baume réparateur glycérine",
+    "type": "Balm",
+    "ingredients": ["glycerin", "shea butter", "aloe vera"],
+    "safe_for_xp": true,
+    "contains": []
+  }
+]

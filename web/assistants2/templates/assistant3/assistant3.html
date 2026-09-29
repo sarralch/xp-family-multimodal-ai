@@ -1,0 +1,211 @@
+{% load static %}
+
+{% block content %}
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-SOMEHASH" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #dff9fb, #ffffff);
+    margin: 0;
+    padding: 2rem;
+    color: #2d3436;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    animation: fadeInDown 1s ease;
+  }
+
+  form {
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 2.5rem;
+    border-radius: 20px;
+    max-width: 750px;
+    margin: 2rem auto;
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1.2s ease;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 1.1rem;
+    color: #2d3436;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    margin-bottom: 1.2rem;
+    box-sizing: border-box;
+    background: #fdfdfd;
+    transition: border 0.3s ease;
+  }
+
+  input[type="text"]:focus {
+    border-color: #0984e3;
+    outline: none;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    font-weight: bold;
+  }
+
+  .mic-btn {
+    background-color: #6c5ce7;
+    color: white;
+  }
+
+  .mic-btn:hover {
+    background-color: #4834d4;
+  }
+
+  .send-btn {
+    background-color: #00b894;
+    color: white;
+  }
+
+  .send-btn:hover {
+    background-color: #019875;
+  }
+
+  .btn i {
+    margin-right: 8px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #2d3436;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+  }
+
+  pre {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 750px;
+    margin: 1.5rem auto;
+    font-size: 1rem;
+    min-height: 60px;
+    animation: fadeIn 1s ease;
+    position: relative;
+  }
+
+  #aiResponse::before {
+    content: "⏳ Génération de la recette...";
+    color: #888;
+    font-style: italic;
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    animation: blink 1s steps(1, end) infinite;
+  }
+
+  .ready #aiResponse::before {
+    content: "";
+    animation: none;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+</style>
+
+<h1><i class="fas fa-flask"></i> Assistant 3 – Recettes Sûres pour XP</h1>
+
+<form method="post">
+  {% csrf_token %}
+  
+  <label for="ingredients"><i class="fas fa-leaf"></i> Ingrédients disponibles :</label>
+  <input type="text" name="ingredients" id="ingredients" required placeholder="ex : huile de coco, cire d’abeille" />
+  <button type="button" class="btn mic-btn" onclick="startVoiceInput('ingredients')">
+    <i class="fas fa-microphone"></i> Parler les ingrédients
+  </button>
+
+  <label for="product_type"><i class="fas fa-pump-soap"></i> Type de produit souhaité :</label>
+  <input type="text" name="product_type" id="product_type" placeholder="ex : crème, baume, lotion" />
+  <button type="button" class="btn mic-btn" onclick="startVoiceInput('product_type')">
+    <i class="fas fa-microphone"></i> Parler le type
+  </button>
+
+  <button type="submit" class="btn send-btn">
+    <i class="fas fa-magic"></i> Générer la recette
+  </button>
+</form>
+
+{% include "assistants/_results.html" %}
+{% if result %}
+  <button type="button" class="btn mic-btn" onclick="speakResponse()">
+    <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Écouter la réponse
+  </button>
+{% endif %}
+
+<script>
+  function startVoiceInput(inputId) {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'fr-FR';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = function (event) {
+      const transcript = event.results[0][0].transcript;
+      document.getElementById(inputId).value = transcript;
+    };
+
+    recognition.onerror = function (event) {
+      alert('Erreur vocale : ' + event.error);
+    };
+  }
+
+  function speakResponse() {
+    const text = document.getElementById("aiResponse").innerText;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    speechSynthesis.speak(utterance);
+  }
+</script>
+{% endblock %}

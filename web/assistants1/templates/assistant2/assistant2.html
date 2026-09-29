@@ -1,0 +1,165 @@
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(to right, #dff9fb, #ffffff);
+    margin: 0;
+    padding: 2rem;
+    color: #333;
+  }
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: fadeInDown 1s ease;
+  }
+
+  form {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 700px;
+    margin: 2rem auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1.5s ease;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .mic-btn {
+    background-color: #3498db;
+    color: white;
+  }
+
+  .mic-btn:hover {
+    background-color: #2980b9;
+  }
+
+  .send-btn {
+    background-color: #2ecc71;
+    color: white;
+  }
+
+  .send-btn:hover {
+    background-color: #27ae60;
+  }
+
+  h2 {
+    text-align: center;
+    color: #34495e;
+    margin-top: 2rem;
+  }
+
+  pre {
+    background-color: #fdfdfd;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 700px;
+    margin: 1rem auto;
+    animation: fadeIn 1.2s ease;
+    font-size: 1rem;
+    min-height: 40px;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+</style>
+
+<h1><i class="fa-solid fa-vial"></i> Assistant 2 – Cosmétiques & Ingrédients</h1>
+
+<form method="post">
+  {% csrf_token %}
+  <label for="question">Posez votre question :</label>
+  <input type="text" name="question" id="question" required placeholder="Ex : Cet ingrédient est-il bon pour la peau ?" />
+  <button type="button" class="btn mic-btn" onclick="startVoiceInput()">
+    <i class="fa-solid fa-microphone"></i> Parler
+  </button>
+  <button type="submit" class="btn send-btn">
+    <i class="fa-solid fa-paper-plane"></i> Envoyer
+  </button>
+</form>
+
+{% include "assistants/_results.html" %}
+{% if result %}
+  <button type="button" class="btn mic-btn" onclick="speakResponse()">
+    <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Écouter la réponse
+  </button>
+{% endif %}
+
+<script>
+  function startVoiceInput() {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'fr-FR';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      document.getElementById("question").value = transcript;
+    };
+
+    recognition.onerror = function(event) {
+      alert('Erreur de reconnaissance vocale : ' + event.error);
+    };
+  }
+
+  function speakResponse() {
+    const text = document.getElementById("aiResponse").innerText;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    speechSynthesis.speak(utterance);
+  }
+</script>
+{% endblock %}

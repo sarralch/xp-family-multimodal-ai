@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: "XP Family Support: multimodal RAG for Xeroderma Pigmentosum patients"
+type: software
+version: 2.0.0
+repository-code: "https://github.com/sarralch/xp-family-multimodal-ai"
+authors:
+  - given-names: Sarra
+    family-names: Lachheb
+  - given-names: Mohamed Iyed
+    family-names: Lagha
+keywords:
+  - retrieval-augmented generation
+  - xeroderma pigmentosum
+  - cosmetic safety
+  - OCR
+  - hybrid search
+preferred-citation:
+  type: conference-paper
+  title: "Development and Evaluation of a Specialized Retrieval-Augmented Generation System for Cosmetic Product Safety Assessment in Xeroderma Pigmentosum Patients"
+  authors:
+    - given-names: Sarra
+      family-names: Lachheb
+    - given-names: Mohamed Iyed
+      family-names: Lagha
+    - given-names: Mohamed Hédi
+      family-names: Riahi
+  collection-title: "2025 IEEE International Conference on Advances in Data-Driven Analytics And Intelligent Systems (ADACIS)"
+  publisher:
+    name: IEEE
+  year: 2025
+  month: 11
+  start: 1
+  end: 6
+  doi: "10.1109/ADACIS65663.2025.11436247"

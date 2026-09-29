@@ -1,0 +1,154 @@
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to right, #dff9fb, #ffffff);
+        margin: 0;
+        padding: 2rem;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    form {
+        text-align: center;
+        margin-bottom: 2rem;
+        background-color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        max-width: 700px;
+        margin-inline: auto;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .custom-file-input {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .file-label {
+        background: #3a86ff;
+        color: white;
+        padding: 0.8rem 1.6rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.3s;
+    }
+
+    .file-label:hover {
+        background: #265d9a;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    button[type="submit"] {
+        background: #00b894;
+        color: white;
+        border: none;
+        padding: 0.9rem 2rem;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        margin-top: 1.5rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background: #008f75;
+    }
+
+    .chat-box {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        max-width: 800px;
+        margin: 2rem auto;
+        animation: fadeInUp 1s ease;
+    }
+
+    .chat-bubble {
+        background-color: #f1f3f6;
+        border-left: 5px solid #3a86ff;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        line-height: 1.6;
+        font-size: 1rem;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        animation: typing 0.5s ease-in;
+    }
+
+    .score, .retrieval-score {
+        margin-top: 2rem;
+        padding: 1.2rem;
+        border-radius: 10px;
+        font-size: 0.95rem;
+    }
+
+    .score {
+        background-color: #e8faff;
+        border-left: 5px solid #1e90ff;
+    }
+
+    .retrieval-score {
+        background-color: #ffeaea;
+        border-left: 5px solid #d63031;
+    }
+
+    h2 {
+        margin-top: 2rem;
+        color: #34495e;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes typing {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        h1 { font-size: 2rem; }
+        .file-label, button[type="submit"] {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="chat-container">
+    <h1><i class="fas fa-robot"></i> Assistant IA – Analyse Cosmétique</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="custom-file-input">
+            <label for="image-upload" class="file-label"><i class="fas fa-camera"></i> Choisir une image</label>
+            <input type="file" id="image-upload" name="image" accept="image/*" required>
+        </div>
+        <button type="submit"><i class="fas fa-paper-plane"></i> Envoyer l'image</button>
+    </form>
+
+{% include "assistants/_results.html" %}
+</div>
+{% endblock %}
