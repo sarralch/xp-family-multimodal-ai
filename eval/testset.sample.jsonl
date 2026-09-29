@@ -1,0 +1,6 @@
+{"question": "L'hydroquinone est-elle autorisée dans les cosmétiques ?", "reference": "Non. L'hydroquinone (CAS 123-31-9) est interdite dans les cosmétiques ; son usage médical est encadré. Elle est dépigmentante et irritante."}
+{"question": "Quelle est la concentration maximale d'oxyde de zinc dans un filtre solaire ?", "reference": "L'oxyde de zinc est un filtre UV autorisé jusqu'à 25 %, à ne pas utiliser sous forme de spray."}
+{"question": "Pourquoi éviter l'huile de bergamote chez un enfant atteint de XP ?", "reference": "L'huile de bergamote non défurocoumarinée est photosensibilisante, ce qui est dangereux pour les patients atteints de Xeroderma Pigmentosum."}
+{"question": "Le rétinol convient-il à une peau XP ?", "reference": "Non. Le rétinol augmente la photosensibilité et n'est pas considéré comme adapté à l'XP."}
+{"question": "Quels filtres solaires privilégier pour un patient XP ?", "reference": "Les filtres minéraux comme l'oxyde de zinc sont à privilégier, avec une éviction totale des UV."}
+{"question": "L'oxybenzone pose-t-elle un problème ?", "reference": "Oui. L'oxybenzone (benzophénone-3) fait partie des benzophénones signalées comme perturbateurs endocriniens et allergènes."}
