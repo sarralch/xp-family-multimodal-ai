@@ -13,8 +13,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    # configs/default.env holds committed, non-secret defaults; .env (git-ignored)
+    # holds secrets and local overrides; real environment variables win over both.
     model_config = SettingsConfigDict(
-        env_file=".env", env_file_encoding="utf-8", env_prefix="", extra="ignore"
+        env_file=("configs/default.env", ".env"),
+        env_file_encoding="utf-8",
+        env_prefix="",
+        extra="ignore",
     )
 
     # --- LLM -------------------------------------------------------------

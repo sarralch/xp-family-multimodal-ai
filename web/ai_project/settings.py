@@ -4,12 +4,18 @@ All secrets and deployment switches come from the environment (see .env.example)
 validated by pydantic-settings; nothing sensitive is hardcoded.
 """
 
+import os
 from pathlib import Path
 
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# xp_family resolves DATA_DIR/CACHE_DIR against the working directory; anchor them to the
+# repo root so `python manage.py runserver` from web/ uses the same data as the API.
+os.environ.setdefault("DATA_DIR", str(BASE_DIR.parent / "data"))
+os.environ.setdefault("CACHE_DIR", str(BASE_DIR.parent / ".cache"))
 
 
 class WebSettings(BaseSettings):
